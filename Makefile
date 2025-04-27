@@ -16,11 +16,12 @@
 # get overridden by architecture-specific builds)
 CC = gcc -D_FILE_OFFSET_BITS=64
 WARN_FLAGS = -Wall -W
-OPT_FLAGS = -O3 -fomit-frame-pointer -march=athlon-xp -DNDEBUG
+OPT_FLAGS = -O3 -fomit-frame-pointer -DNDEBUG
 #OPT_FLAGS = -O3 -fomit-frame-pointer -march=k8 -DNDEBUG
 
 CFLAGS = $(OPT_FLAGS) $(MACHINE_FLAGS) $(WARN_FLAGS) \
-		-I. -Iinclude -Ignfs -Ignfs/poly -Ignfs/poly/stage1
+		-I. -Iinclude -Ignfs -Ignfs/poly -Ignfs/poly/stage1 \
+		-I/opt/homebrew/Cellar/gmp/6.3.0/include
 
 # tweak the compile flags
 
@@ -47,7 +48,7 @@ endif
 # win32 or win64, so it's safe to pull libpthread into the link line.
 # Of course this does mean you have to install the minGW pthreads bundle...
 
-LIBS += -lgmp -lm -lpthread
+LIBS += -L/opt/homebrew/Cellar/gmp/6.3.0/lib -lgmp -lm -lpthread
 
 #---------------------------------- Generic file lists -------------------
 
