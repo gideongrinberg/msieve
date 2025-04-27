@@ -19,9 +19,13 @@ WARN_FLAGS = -Wall -W
 OPT_FLAGS = -O3 -fomit-frame-pointer -DNDEBUG
 #OPT_FLAGS = -O3 -fomit-frame-pointer -march=k8 -DNDEBUG
 
+# Use pkg-config to find GMP
+GMP_CFLAGS = $(shell pkg-config --cflags gmp)
+GMP_LIBS = $(shell pkg-config --libs gmp)
+
 CFLAGS = $(OPT_FLAGS) $(MACHINE_FLAGS) $(WARN_FLAGS) \
 		-I. -Iinclude -Ignfs -Ignfs/poly -Ignfs/poly/stage1 \
-		-I/opt/homebrew/Cellar/gmp/6.3.0/include
+		$(GMP_CFLAGS)
 
 # tweak the compile flags
 
@@ -48,7 +52,7 @@ endif
 # win32 or win64, so it's safe to pull libpthread into the link line.
 # Of course this does mean you have to install the minGW pthreads bundle...
 
-LIBS += -L/opt/homebrew/Cellar/gmp/6.3.0/lib -lgmp -lm -lpthread
+LIBS += $(GMP_LIBS) -lm -lpthread
 
 #---------------------------------- Generic file lists -------------------
 
